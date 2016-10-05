@@ -50,9 +50,15 @@ struct context_s
 };
 typedef struct context_s context_t;
 
-#define RETURN_ERROR(ctx,retval,...) {                                  \
+#define RETURN_ERROR(ctx, retval, msg) {                                \
         if ((ctx)->errbuf != NULL)                                      \
-            snprintf ((ctx)->errbuf, (ctx)->errbuf_size, __VA_ARGS__);  \
+            snprintf ((ctx)->errbuf, (ctx)->errbuf_size, msg);          \
+        return (retval);                                                \
+    }
+
+#define RETURN_ERROR_1(ctx, retval, msg, a1) {                          \
+        if ((ctx)->errbuf != NULL)                                      \
+            snprintf ((ctx)->errbuf, (ctx)->errbuf_size, msg, a1);      \
         return (retval);                                                \
     }
 
@@ -238,7 +244,7 @@ static int context_add_value (context_t *ctx, yajl_val v)
         if (ctx->stack->key == NULL)
         {
             if (!YAJL_IS_STRING (v))
-                RETURN_ERROR (ctx, EINVAL, "context_add_value: "
+                RETURN_ERROR_1 (ctx, EINVAL, "context_add_value: "
                               "Object key is not a string (%#04x)",
                               v->type);
 
@@ -262,7 +268,7 @@ static int context_add_value (context_t *ctx, yajl_val v)
     }
     else
     {
-        RETURN_ERROR (ctx, EINVAL, "context_add_value: Cannot add value to "
+        RETURN_ERROR_1(ctx, EINVAL, "context_add_value: Cannot add value to "
                       "a value of type %#04x (not a composite type)",
                       ctx->stack->value->type);
     }
