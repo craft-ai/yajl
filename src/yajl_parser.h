@@ -36,7 +36,7 @@ typedef enum {
     yajl_state_array_start,
     yajl_state_array_got_val,
     yajl_state_array_need_val,
-    yajl_state_got_value,
+    yajl_state_got_value
 } yajl_state;
 
 struct yajl_handle_t {
