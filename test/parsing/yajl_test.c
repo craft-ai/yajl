@@ -77,7 +77,7 @@ static int test_yajl_boolean(void * ctx, int boolVal)
     return 1;
 }
 
-static int test_yajl_integer(void *ctx, long long integerVal)
+static int test_yajl_integer(void *ctx, yajl_integer integerVal)
 {
     printf("integer: %lld\n", integerVal);
     return 1;

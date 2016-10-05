@@ -76,7 +76,7 @@ struct yajl_val_s
     {
         char * string;
         struct {
-            long long i; /*< integer value, if representable. */
+            yajl_integer i; /*< integer value, if representable. */
             double  d;   /*< double value, if representable. */
             char   *r;   /*< unparsed number in string form. */
             /** Signals whether the \em i and \em d members are

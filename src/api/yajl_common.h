@@ -68,6 +68,18 @@ typedef struct
     void * ctx;
 } yajl_alloc_funcs;
 
+#if defined(__ANSI__) || defined(__STDC__)
+typedef long yajl_integer;
+#define YAJL_INTEGER_FORMAT "%ld"
+#define YAJL_INTEGER_MAX LONG_MAX
+#define YAJL_INTEGER_MIN LONG_MIN
+#else
+typedef long long int yajl_integer;
+#define YAJL_INTEGER_FORMAT "%lld"
+#define YAJL_INTEGER_MAX LLONG_MAX
+#define YAJL_INTEGER_MIN LLONG_MIN
+#endif
+
 #ifdef __cplusplus
 }
 #endif

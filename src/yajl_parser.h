@@ -71,7 +71,7 @@ yajl_render_error_string(yajl_handle hand, const unsigned char * jsonText,
 
 /* A little built in integer parsing routine with the same semantics as strtol
  * that's unaffected by LOCALE. */
-long long
+yajl_integer
 yajl_parse_integer(const unsigned char *number, unsigned int length);
 
 

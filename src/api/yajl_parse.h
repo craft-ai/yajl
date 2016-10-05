@@ -74,7 +74,7 @@ extern "C" {
     typedef struct {
         int (* yajl_null)(void * ctx);
         int (* yajl_boolean)(void * ctx, int boolVal);
-        int (* yajl_integer)(void * ctx, long long integerVal);
+        int (* yajl_integer)(void * ctx, yajl_integer integerVal);
         int (* yajl_double)(void * ctx, double doubleVal);
         /** A callback which passes the string representation of the number
          *  back to the client.  Will be used for all numbers when present */
