@@ -221,6 +221,26 @@ yajl_gen_integer(yajl_gen g, yajl_integer number)
 #include <float.h>
 #define isnan _isnan
 #define isinf !_finite
+#elif !defined(isnan) && !defined(isinf)
+/* cf. http://stackoverflow.com/a/20723890/454743 */
+int yajl_isnan(double x)
+{
+    union { unsigned int u[2]; double f; } ieee754;
+    ieee754.f = x;
+    return ( ieee754.u[1] & 0x7fffffff ) +
+           ( ieee754.u[0] != 0 ) > 0x7ff00000;
+}
+#define isnan yajl_isnan
+
+int yajl_isinf(double x)
+{
+    union { unsigned int u[2]; double f; } ieee754;
+    ieee754.f = x;
+    return (  ieee754.u[1] & 0x7fffffff ) == 0x7ff00000 &&
+           (  ieee754.u[0] == 0 );
+}
+#define isinf yajl_isinf
+
 #endif
 
 yajl_gen_status

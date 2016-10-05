@@ -14,11 +14,12 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <errno.h>
 #include <assert.h>
+#include <errno.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "api/yajl_tree.h"
 #include "api/yajl_parse.h"
@@ -27,7 +28,19 @@
 
 #if defined(_WIN32) || defined(WIN32)
 #define snprintf sprintf_s
+#elif !defined(snprintf)
+
+/* Unsafe implementation */
+int snprintf(char* s, size_t n, const char* format, ...) {
+    va_list args;
+    int actual_n;
+    va_start(args, format);
+    actual_n = vsprintf(s, format, args);
+    va_end (args);
+    return actual_n;
+}
 #endif
+
 
 #define STATUS_CONTINUE 1
 #define STATUS_ABORT    0
